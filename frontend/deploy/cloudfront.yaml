@@ -1,0 +1,26 @@
+```yaml
+Resources:
+  MyCloudFrontDistribution:
+    Type: "AWS::CloudFront::Distribution"
+    Properties:
+      DistributionConfig:
+        Origins:
+          - DomainName: "your-bucket.s3.amazonaws.com"
+            Id: "your-bucket"
+            S3OriginConfig:
+              OriginAccessIdentity: ""
+        Enabled: "true"
+        DefaultCacheBehavior:
+          TargetOriginId: "your-bucket"
+          ViewerProtocolPolicy: "redirect-to-https"
+          ForwardedValues:
+            QueryString: "false"
+            Cookies:
+              Forward: "none"
+        PriceClass: "PriceClass_All"
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: "true"
+        Restrictions:
+          GeoRestriction:
+            RestrictionType: "none"
+```

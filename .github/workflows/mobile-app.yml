@@ -1,0 +1,44 @@
+name: Mobile App CI/CD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    - run: npm install
+    - run: npm test
+    - run: npm run build:android
+    - name: Upload APK to Google Play
+      uses: r0adkll/upload-google-play@v1
+      with:
+        serviceAccountJson: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+        packageName: com.example.app
+        releaseFile: app/build/outputs/apk/release/app-release.apk
+        track: production
+
+  build-ios:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    - run: npm install
+    - run: npm test
+    - run: npm run build:ios
+    - name: Upload IPA to App Store
+      uses: actions/upload-artifact@v2
+      with:
+        name: app.ipa
+        path: ios/build/Release-iphoneos/app.ipa

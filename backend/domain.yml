@@ -1,0 +1,40 @@
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - property_recommendation
+
+entities:
+  - location
+  - price_range
+
+slots:
+  location:
+    type: text
+  price_range:
+    type: text
+
+responses:
+  utter_greet:
+    - text: "Hello! How can I assist you today?"
+  utter_goodbye:
+    - text: "Goodbye! Have a great day."
+  utter_affirm:
+    - text: "Great!"
+  utter_deny:
+    - text: "No problem. Let me know if there's anything else."
+  utter_mood_great:
+    - text: "That's wonderful to hear!"
+  utter_mood_unhappy:
+    - text: "I'm sorry to hear that. How can I help?"
+  utter_bot_challenge:
+    - text: "I am a bot, powered by Rasa."
+  utter_property_recommendation:
+    - text: "I can help you find properties. Please provide your location and price range."
+
+actions:
+  - action_property_recommendation
